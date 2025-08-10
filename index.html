@@ -185,6 +185,11 @@
     @supports (height: 100svh) {
       /* Example: .hero { min-height: 100svh; } */
     }
+
+    /* confetti touch (lightweight) */
+    .confetti{ position:fixed; inset:0; pointer-events:none; overflow:hidden }
+    .confetti span{ position:absolute; top:-10px; width:10px; height:14px; opacity:.9; animation:fall linear infinite; }
+    @keyframes fall{ to { transform: translateY(110vh) rotate(360deg);} }
   </style>
 </head>
 <body>
@@ -223,12 +228,14 @@
           <a class="btn" href="https://www.amazon.com/baby-reg/maitry-desai-december-2025-sandiego/1AG8F1DTPCLCM?ref_=cm_sw_r_apin_dp_HYG0WCPD2EABJHWZNNAN&language=en-US" target="_blank" rel="noopener">Registry-Amazon</a>
 		  <a class="btn" href="https://my.babylist.com/maitry-desai" target="_blank" rel="noopener">Registry-Babylist</a>
         </div>
-        <div class="hint">Place <code>video.mp4</code>, <code>poster.jpg</code>, and (optional) <code>captions.vtt</code> in the same folder as this HTML.</div>
       </div>
     </section>
   </main>
 
   <footer>🎥 Credits: © 2025 Dhruvir Gandhi – All rights reserved</footer>
+
+    <!-- simple confetti sprinkles (optional) -->
+  <div class="confetti" aria-hidden="true" id="confetti"></div>
 
   <script>
     // Overlay play behavior
@@ -238,6 +245,19 @@
     video.addEventListener('play', () => overlay.classList.add('is-hidden'));
     video.addEventListener('pause', () => { if (video.currentTime < video.duration) overlay.classList.remove('is-hidden'); });
 
+	  // Lightweight confetti
+    const confetti = document.getElementById('confetti');
+    const colors = ['#ffb6d9','#a9d9ff','#ffe9a3','#c9f5d5'];
+    for (let i=0;i<40;i++){
+      const s=document.createElement('span');
+      s.style.left = Math.random()*100+'%';
+      s.style.background = colors[Math.floor(Math.random()*colors.length)];
+      s.style.animationDuration = (6+Math.random()*6)+'s';
+      s.style.animationDelay = (Math.random()*2)+'s';
+      s.style.transform = `translateY(0) rotate(${Math.random()*360}deg)`;
+      confetti.appendChild(s);
+    }
+	  
     // Robust Add to Calendar (5–9 PM America/Los_Angeles)
     document.getElementById('addToCalendar').addEventListener('click', (e) => {
       e.preventDefault();
@@ -294,3 +314,4 @@
   </script>
 </body>
 </html>
+
