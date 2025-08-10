@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Baby‑Shower Invite – Maitry </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Optional: Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <!--img src="logo.png" alt="Baby Shower" class="logo"-->
+        <h1>🎉 You’re Invited!</h1>
+        <p class="subtitle">Join us for a sweet celebration as we welcome our little bundle of joy.</p>
+    </header>
+
+    <section class="video">
+        <!-- Replace src with your YouTube embed URL -->
+        <iframe
+            src="https://www.youtube.com/embed/XXXXXXXXXXX?autoplay=0"
+            title="Baby Shower Video Invite"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
+    </section>
+
+    <section class="details">
+        <h2>Details</h2>
+        <p><strong>Date:</strong> 04 Oct 2025</p>
+        <p><strong>Time:</strong> 5:00 PM – 7:00 PM</p>
+        <p><strong>Location:</strong> 3roots Recreation Center </p>
+        <p><strong>RSVP by:</strong> 30 Aug 2025</p>
+    </section>
+
+    <section class="rsvp">
+        <h2>RSVP</h2>
+        <form action="https://formspree.io/f/mayorxx" method="POST" id="rsvp-form">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" required>
+
+            <label for="email">Email</label>
+            <input type="email" name="_replyto" id="email" required>
+
+            <label for="attending">
+                Will you be attending? 
+                <select name="attending" id="attending">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </label>
+
+            <button type="submit">Send RSVP</button>
+        </form>
+        <p class="thank-you" id="thank-you" style="display:none;">
+            🎉 Thank you! We’ll see you soon.
+        </p>
+    </section>
+
+    <footer>
+        <p>© 2025 Dhruvir Gandhi – All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Simple JS to show a thank‑you message
+        document.getElementById('rsvp-form').addEventListener('submit', function(e){
+            e.preventDefault(); // prevent actual submit for demo
+            // Simulate successful submit
+            document.getElementById('thank-you').style.display = 'block';
+            // In real usage, remove preventDefault() so Formspree handles it
+        });
+    </script>
+</div>
+</body>
+</html>
