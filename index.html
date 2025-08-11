@@ -65,8 +65,15 @@
        2) Uncomment the next block */
     
     body{
-      background: url("desktop.png") no-repeat,
+      background: url("desktop.png") center center / contain no-repeat fixed,
                   linear-gradient(180deg,var(--velvet), var(--velvet-dark) 55%, #090909);
+		/* Explanation:
+			- url("desktop.pgn") -> your image file
+			- center center -> center horizontal and vertical
+			- / cover -> scale image to cover the entire screen
+			- no-repeat -> don't tile the image
+			- fixed -> stays fixed while scrolling
+		*/
     }
     body::before{
       content:"";
@@ -341,6 +348,7 @@
   </script>
 </body>
 </html>
+
 
 
 
