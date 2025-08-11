@@ -65,8 +65,10 @@
        2) Uncomment the next block */
     
     body{
-      background: url("desktop.png") center center / cover no-repeat fixed,
+	  margin: 10;
+      background: url("desktop.png") center top / cover no-repeat fixed,
                   linear-gradient(180deg,var(--velvet), var(--velvet-dark) 55%, #090909);
+	  position: relative;
 		/* Explanation:
 			- url("desktop.pgn") -> your image file
 			- center center -> center horizontal and vertical
@@ -77,13 +79,15 @@
     }
     body::before{
       content:"";
-      position:fixed; inset:0; pointer-events:none;
+      position:fixed; 
+	  inset:0; 
+	  pointer-events:none;
       background: linear-gradient(to bottom, rgba(0,0,0,.25), rgba(0,0,0,.4));
     }
 
 
     header{
-      padding: clamp(16px, 3.5vw, 36px) 16px 12px;
+      padding: 80px;
       display:grid; place-items:center; text-align:center;
     }
     .marquee{
@@ -111,9 +115,14 @@
       padding:6px 12px; border-radius:999px; margin-bottom:10px; font-weight:600;
     }
     h1{ font-size: clamp(28px, 4.6vw, 46px); margin: 10px 0 6px; }
-    .sub{ font-size: clamp(14px, 2.4vw, 18px); opacity:.9 }
+    .sub{ font-size: clamp(14px, 2.4vw, 18px); opacity:.9; padding-top:64px; }
 
-    .container{ width:min(980px, 92%); margin: 18px auto 54px; }
+    .container{ 
+		width:100%;
+		max-width: 1200px;
+		margin: 16px auto 54px;
+		padding: 0 16px;
+	}
 
     .card{
       background: linear-gradient(180deg, #0e0e0e, #141414);
@@ -215,6 +224,14 @@
       .actions { gap: 8px; }
       .actions .btn { flex: 1 1 100%; width: 100%; padding: 12px 14px; min-height: 44px; font-size: 16px; }
     }
+	
+	@media (max-width: 480px) {
+		body {
+			background: url("mobile.png") center top / cover no-repeat fixed,
+                  linear-gradient(180deg,var(--velvet), var(--velvet-dark) 55%, #090909);
+			position: relative;
+		}
+	}
 
     /* iOS-friendly full-height units if needed */
     @supports (height: 100svh) {
@@ -348,9 +365,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
