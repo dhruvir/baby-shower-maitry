@@ -166,6 +166,34 @@
 
     :focus-visible{ outline: 3px solid var(--ring); outline-offset:3px }
 
+	.card {
+		background: rgba(20, 20, 20, 0.1); /* semi-transparent dark */
+		backdrop-filter: blur(8px);        /* glass blur effect */
+		-webkit-backdrop-filter: blur(8px);/* Safari support */
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 22px;
+		overflow: hidden;
+		box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+	}
+	
+	.ticket {
+		background: rgba(21, 21, 21, 0.55);
+		backdrop-filter: blur(6px);
+		-webkit-backdrop-filter: blur(6px);
+		border: 1px dashed rgba(255, 255, 255, 0.15);
+		border-radius: 14px;
+		padding: 12px 14px;
+		position: relative;
+	}
+	
+	.actions .btn {
+		background: rgba(17, 17, 17, 0.5);
+		backdrop-filter: blur(4px);
+		-webkit-backdrop-filter: blur(4px);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		color: var(--cream);
+	}
+	  
     /* ===== Mobile polish ===== */
     @media (max-width: 480px) {
       header { padding: 16px 12px 8px; }
@@ -313,6 +341,7 @@
   </script>
 </body>
 </html>
+
 
 
 
