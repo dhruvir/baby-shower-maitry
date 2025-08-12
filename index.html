@@ -260,8 +260,14 @@
     @media (max-width:480px){
       .container{ width:94%; margin:150px auto 36px; }
       video{ max-height:90vh; }
-	  footer {display: none;}
+	  /*footer {display: none;}
 	  /*.poster-overlay { padding-top: 10px;}*/
+	  .page-content, main {
+		  padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); /*height of the dock */
+	  }
+	  footer {
+		  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+	  }
       body{ background: url("mobile.png") center top / contain no-repeat, linear-gradient(180deg,var(--velvet), var(--velvet-dark) 55%, #090909); }
       body.stage-dark{ background:#000 !important; }
     }
@@ -383,8 +389,8 @@
     </div>
     <div class="intro-content">
       <div class="studio">A DharMa Production</div>
-      <div class="feature-title">Feature Presentation</div>
-      <div class="subtitle">Now Showing: Maitry's Baby Shower</div>
+      <div class="feature-title">Maitry's Baby Shower</div>
+      <div class="subtitle">Invite only premier</div>
       <div class="cue">Tap or click to continue</div>
     </div>
   </div>
@@ -591,6 +597,7 @@
   </script>
 </body>
 </html>
+
 
 
 
