@@ -142,19 +142,78 @@
 
     /* ===== Mobile polish ===== */
     @media (max-width: 768px) {
-      header { padding: 16px 12px 8px; }
-      .marquee { border-radius: 16px; padding: 10px 14px; }
-      .marquee::before, .marquee::after { display: none; }
-      .container { width: 94%; margin: 90px auto 36px; }
-      .card { border-radius: 16px; box-shadow: 0 12px 28px rgba(0,0,0,.4); }
-      .video-wrap::before, .video-wrap::after { display: none; }
-      .poster-overlay { padding-top: 80px; } /* lower play button on mobile too */
-      video { width: 100%; height: auto; object-fit: contain; max-height: 70vh; }
-      .when-where { grid-template-columns: 1fr; gap: 10px; }
-      .ticket { padding: 10px 12px; border-radius: 12px; }
-      .actions { gap: 8px; }
-      .actions .btn { flex: 1 1 100%; width: 100%; padding: 12px 14px; min-height: 44px; font-size: 16px; }
-    }
+	  header { padding: 16px 12px 8px; }
+	  .marquee { border-radius: 16px; padding: 10px 14px; }
+	  .marquee::before, .marquee::after { display: none; }
+	  .container { width: 94%; margin: 90px auto 36px; }
+	  .card { border-radius: 16px; box-shadow: 0 12px 28px rgba(0,0,0,.4); }
+	  .video-wrap::before, .video-wrap::after { display: none; }
+	
+	  /* Make the glass overlay darker so the button stands out */
+	  .poster-overlay {
+	    padding-top: 60px;                 /* still slightly lower */
+	    background: rgba(0,0,0,0.55);      /* was 0.45 */
+	    backdrop-filter: blur(12px) saturate(120%);
+	    -webkit-backdrop-filter: blur(12px) saturate(120%);
+	  }
+	
+	  /* Bigger, higher-contrast play button with a soft pulse */
+	  .play-btn {
+	    --size: 112px;                     /* was ~90px */
+	    position: relative;
+	    box-shadow:
+	      0 12px 30px rgba(0,0,0,.6),
+	      0 0 0 10px rgba(0,0,0,.35),      /* dark halo against bright posters */
+	      0 0 0 14px rgba(255,255,255,.18);/* soft outer rim */
+	  }
+	  .play-btn::after {
+	    content: "";
+	    position: absolute;
+	    inset: -14px;
+	    border-radius: 999px;
+	    border: 2px solid rgba(255,255,255,.35);
+	    animation: playPulse 1.8s ease-out infinite;
+	  }
+	  @keyframes playPulse {
+	    0%   { transform: scale(0.95); opacity: .9; }
+	    70%  { transform: scale(1.15); opacity: 0; }
+	    100% { opacity: 0; }
+	  }
+	  /* Respect reduced motion */
+	  @media (prefers-reduced-motion: reduce) {
+	    .play-btn::after { animation: none; }
+	  }
+	
+	  /* Chunkier play triangle for readability */
+	  .play-icon{
+	    border-left: 34px solid #1b1b1b;   /* darker triangle for contrast */
+	    border-top: 22px solid transparent;
+	    border-bottom: 22px solid transparent;
+	    margin-left: 8px;
+	  }
+	
+	  /* Optional: small hint text on mobile */
+	  .poster-overlay::after{
+	    content: "Tap to play";
+	    position: absolute;
+	    bottom: 14px;
+	    left: 50%;
+	    transform: translateX(-50%);
+	    font-size: 13px;
+	    letter-spacing: .02em;
+	    opacity: .85;
+	    background: rgba(0,0,0,.45);
+	    padding: 6px 10px;
+	    border-radius: 999px;
+	    border: 1px solid rgba(255,255,255,.15);
+	  }
+	
+	  video { width: 100%; height: auto; object-fit: contain; max-height: 70vh; }
+	  .when-where { grid-template-columns: 1fr; gap: 10px; }
+	  .ticket { padding: 10px 12px; border-radius: 12px; }
+	  .actions { gap: 8px; }
+	  .actions .btn { flex: 1 1 100%; width: 100%; padding: 12px 14px; min-height: 44px; font-size: 16px; }
+	}
 	
     /* ===== Curtain Intro (simple panels from curtains.png) ===== */
     .intro{ position: fixed; inset: 0; z-index: 9999; display:grid; place-items:center; overflow:hidden; background:#0a0a0a; }
@@ -208,6 +267,89 @@
 	@media (max-width:768px) and (orientation: portrait){
 		.curtain { background: url("mobile_curtains.jpg") center / cover no-repeat;}
 	}
+
+	/* ===== Mobile bottom dock ===== */
+	@media (max-width: 600px) {
+	  /* Hide the originals in the card */
+	  .details .when-where,
+	  .details .actions {
+	    display: none !important;
+	  }
+	
+	  /* Make room so content isn't covered by the dock */
+	  body, .page-content, main {
+	    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+	  }
+	
+	  .mobile-dock {
+	    position: fixed;
+	    left: 0; right: 0; bottom: 0;
+	    z-index: 10000;
+	    display: grid;
+	    grid-template-columns: 1fr; /* stack details over actions when cramped */
+	    gap: 8px;
+	    padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+	    background: rgba(15,15,15,0.75);
+	    backdrop-filter: blur(10px) saturate(120%);
+	    -webkit-backdrop-filter: blur(10px) saturate(120%);
+	    border-top: 1px solid rgba(255,255,255,0.12);
+	  }
+	
+	  /* Make it a single-row layout when there’s width */
+	  @media (min-width: 420px) and (max-width: 600px) {
+	    .mobile-dock {
+	      grid-template-columns: 1fr auto;
+	      align-items: center;
+	    }
+	  }
+	
+	  .dock-details {
+	    display: flex;
+	    gap: 8px;
+	    flex-wrap: nowrap;
+	    overflow-x: auto;
+	    scrollbar-width: none;
+	  }
+	  .dock-details::-webkit-scrollbar { display: none; }
+	
+	  .pill {
+	    display: inline-block;
+	    padding: 6px 10px;
+	    border-radius: 999px;
+	    font-size: 13px;
+	    line-height: 1;
+	    background: rgba(255,255,255,0.10);
+	    border: 1px solid rgba(255,255,255,0.15);
+	    white-space: nowrap;
+	  }
+	
+	  .dock-actions {
+	    display: flex;
+	    gap: 8px;
+	    width: 100%;
+	  }
+	  .dock-actions .btn {
+	    flex: 1 1 auto;
+	    min-height: 44px;
+	    padding: 10px 12px;
+	    font-size: 15px;
+	    text-align: center;
+	  }
+	  .dock-actions .btn.primary {
+	    background: linear-gradient(180deg,#ffd166,#e7b037);
+	    color:#1b1300;
+	    border:1px solid #c59b16;
+	  }
+	  .dock-actions .btn.ghost {
+	    border-style: dashed;
+	  }
+	}
+	
+	/* On larger screens, hide the dock entirely */
+	@media (min-width: 601px) {
+	  .mobile-dock { display: none !important; }
+	}
+	  
   </style>
 </head>
 <body class="stage-dark">
@@ -264,7 +406,21 @@
         </div>
       </section>
     </main>
-	
+
+	<!-- Mobile bottom dock -->
+	<div class="mobile-dock" id="mobileDock" role="region" aria-label="Event details and actions">
+	  <div class="dock-details">
+	    <span class="pill">Sat Oct 4</span>
+	    <span class="pill">5:30–9:00 PM</span>
+	    <span class="pill">3roots Rec Center</span>
+	  </div>
+	  <div class="dock-actions">
+	    <a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSd0uqHJqyUao9RAlbgGMzEXWCjC23vQ1ljImFDnbT6GgM0dhA/viewform" target="_blank" rel="noopener">RSVP</a>
+	    <a class="btn ghost" id="addToCalendarDock" href="#">Add to Calendar</a>
+	    <a class="btn" href="video.mp4" download>Download</a>
+	  </div>
+	</div>
+	  
 	<footer>🎥 Credits: © 2025 Dhruvir Gandhi – All rights reserved</footer>
 	
   </div>
@@ -323,7 +479,7 @@
     video.addEventListener('ended', () => overlay.classList.remove('is-hidden'));
 	
 	// Robust Add to Calendar (5–9 PM America/Los_Angeles)
-    document.getElementById('addToCalendar').addEventListener('click', (e) => {
+    /* document.getElementById('addToCalendar').addEventListener('click', (e) => {
       e.preventDefault();
       const title = "Maitry's Baby Shower (Movies Theme)";
       const locationTxt = "7401 Cypress Lane, San Diego, CA 92126";
@@ -374,10 +530,45 @@
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
-    });
+    }); */
+	const icsHandler = (e) => {
+    e.preventDefault();
+    const title = "Maitry's Baby Shower (Movies Theme)";
+    const locationTxt = "7401 Cypress Lane, San Diego, CA 92126";
+    const description = "Watch the video invite: " + location.href;
+    const dtStart = "20251004T173000";
+    const dtEnd   = "20251004T210000";
+    const lines = [
+      "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//BabyShower//Invite//EN","CALSCALE:GREGORIAN","METHOD:PUBLISH",
+      "BEGIN:VTIMEZONE","TZID:America/Los_Angeles","X-LIC-LOCATION:America/Los_Angeles",
+      "BEGIN:DAYLIGHT","TZOFFSETFROM:-0800","TZOFFSETTO:-0700","TZNAME:PDT","DTSTART:19700308T020000","RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU","END:DAYLIGHT",
+      "BEGIN:STANDARD","TZOFFSETFROM:-0700","TZOFFSETTO:-0800","TZNAME:PST","DTSTART:19701101T020000","RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU","END:STANDARD",
+      "END:VTIMEZONE",
+      "BEGIN:VEVENT",
+      "UID:" + Date.now() + "@invite",
+      "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z",
+      "DTSTART;TZID=America/Los_Angeles:" + dtStart,
+      "DTEND;TZID=America/Los_Angeles:" + dtEnd,
+      "SUMMARY:" + title,
+      "DESCRIPTION:" + description.replace(/\n/g, "\\n"),
+      "LOCATION:" + locationTxt.replace(/,/g, "\\,"),
+      "END:VEVENT","END:VCALENDAR"
+    ];
+    const ics = lines.join("\r\n");
+    const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "maitry-baby-shower.ics";
+    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  };
+
+  // Bind both buttons
+  document.getElementById('addToCalendar')?.addEventListener('click', icsHandler);
+  document.getElementById('addToCalendarDock')?.addEventListener('click', icsHandler);
   </script>
 </body>
 </html>
+
 
 
 
