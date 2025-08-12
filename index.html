@@ -145,7 +145,7 @@
       header { padding: 16px 12px 8px; }
       .marquee { border-radius: 16px; padding: 10px 14px; }
       .marquee::before, .marquee::after { display: none; }
-      .container { width: 94%; margin: 60px auto 36px; }
+      .container { width: 94%; margin: 90px auto 36px; }
       .card { border-radius: 16px; box-shadow: 0 12px 28px rgba(0,0,0,.4); }
       .video-wrap::before, .video-wrap::after { display: none; }
       .poster-overlay { padding-top: 80px; } /* lower play button on mobile too */
@@ -199,8 +199,8 @@
     .poster-overlay.is-hidden{ opacity:0; pointer-events:none; }
 
     @media (max-width:480px){
-      .container{ width:94%; margin:70px auto 36px; }
-      video{ max-height:90vh; }
+     /* .container{ width:94%; margin:70px auto 36px; }
+      video{ max-height:90vh; } */
       body{ background: url("mobile.png") center top / cover no-repeat, linear-gradient(180deg,var(--velvet), var(--velvet-dark) 55%, #090909); }
       body.stage-dark{ background:#000 !important; }
     }
@@ -378,5 +378,6 @@
   </script>
 </body>
 </html>
+
 
 
