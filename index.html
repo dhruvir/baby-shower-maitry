@@ -393,6 +393,60 @@
 	.details .actions .btn {
 	  flex: 0 1 auto;   /* natural width, can wrap */
 	}
+
+	/*start changes to fix ios/pixel issue*/
+	  /* If you previously offset the dock upward for a footer, undo that: */
+    .mobile-dock { bottom: 0 !important; }
+
+    .mobile-dock {
+		position: fixed;
+		left: 0; right: 0; bottom: 0;
+		z-index: 10000;
+		display: grid;
+		grid-template-columns: 1fr;               /* one column */
+		grid-template-rows: min-content min-content; /* FORCE 2 rows: details + actions */
+		align-content: start;                      /* prevent collapse */
+		gap: 8px;
+		padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+		background: rgba(15,15,15,0.75);
+		backdrop-filter: blur(10px) saturate(120%);
+		-webkit-backdrop-filter: blur(10px) saturate(120%);
+		border-top: 1px solid rgba(255,255,255,0.12);
+  	}
+
+  	.dock-details {
+		display: flex;
+		flex-wrap: nowrap;
+		gap: 8px;
+		overflow-x: auto;                 /* allow sideways scroll if needed */
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: none;
+  	}
+  	.dock-details::-webkit-scrollbar { display: none; }
+
+  	.pill {
+		display: inline-block;
+		padding: 6px 10px;
+		border-radius: 999px;
+		font-size: 13px;
+		line-height: 1;
+		background: rgba(255,255,255,0.10);
+		border: 1px solid rgba(255,255,255,0.15);
+		white-space: nowrap;
+  	}
+
+  	.dock-actions {
+		display: flex;
+		gap: 8px;
+		flex-wrap: wrap;                  /* Option B you chose */
+  	}
+  	.dock-actions .btn {
+		flex: 1 1 calc(50% - 8px);        /* two per row; adjust as needed */
+		min-height: 44px;
+		white-space: nowrap;
+		text-align: center;
+  	}  /*end changes to fix ios/pixel issue*/
+	
 	/* On larger screens, hide the dock entirely */
 	@media (min-width: 601px) {
 	  .mobile-dock { display: none !important; }
@@ -618,6 +672,7 @@
   </script>
 </body>
 </html>
+
 
 
 
